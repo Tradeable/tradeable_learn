@@ -13,4 +13,14 @@ class TradeableLearnModuleModel {
       this.note,
       this.bgColor,
       this.iconUrl});
+
+  factory TradeableLearnModuleModel.fromJson(Map<String, dynamic> json) {
+    return TradeableLearnModuleModel(
+        id: json['level_id'].toString(),
+        name: json['title'] ?? '',
+        description: json['description'] ?? '',
+        note: json['status'],
+        bgColor: json['color'],
+        iconUrl: json['image_url']);
+  }
 }

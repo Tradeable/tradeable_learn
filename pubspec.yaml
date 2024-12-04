@@ -8,8 +8,10 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  dio: ^5.7.0
   flutter:
     sdk: flutter
+  shimmer: ^3.0.0
   tradeable_learn_widget:
     git:
       url: https://github.com/Tradeable/tradeable_learn_widget.git
