@@ -558,7 +558,7 @@ packages:
     description:
       path: "."
       ref: axis_levels
-      resolved-ref: "3088ee7bf58e1f14461213e298165c3bf7047a1e"
+      resolved-ref: "03d5eb970e7771ce501cf765af8db063947e5e16"
       url: "https://github.com/Tradeable/tradeable_learn_widget.git"
     source: git
     version: "0.0.1"
