@@ -5,6 +5,7 @@ class TradeableLearnModuleModel {
   final String? note;
   final String? bgColor;
   final String? iconUrl;
+  final bool? isRelated;
 
   TradeableLearnModuleModel(
       {required this.id,
@@ -12,7 +13,8 @@ class TradeableLearnModuleModel {
       required this.description,
       this.note,
       this.bgColor,
-      this.iconUrl});
+      this.iconUrl,
+      this.isRelated});
 
   factory TradeableLearnModuleModel.fromJson(Map<String, dynamic> json) {
     return TradeableLearnModuleModel(
@@ -21,6 +23,7 @@ class TradeableLearnModuleModel {
         description: json['description'] ?? '',
         note: json['status'],
         bgColor: json['color'],
-        iconUrl: json['image_url']);
+        iconUrl: json['image_url'],
+        isRelated: json['is_related']);
   }
 }

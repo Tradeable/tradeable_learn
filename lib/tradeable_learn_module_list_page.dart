@@ -8,8 +8,11 @@ import 'package:tradeable_learn/widgets/module_card_shimmer.dart';
 
 class TradeableLearnModuleListPage extends StatefulWidget {
   final VoidCallback onClose;
+  final int? pageId;
+  final List<TradeableLearnModuleModel>? pages;
 
-  const TradeableLearnModuleListPage({super.key, required this.onClose});
+  const TradeableLearnModuleListPage(
+      {super.key, required this.onClose, this.pageId, this.pages});
 
   @override
   State<TradeableLearnModuleListPage> createState() =>
@@ -25,7 +28,14 @@ class _TradeableLearnModuleListPageState
   @override
   void initState() {
     super.initState();
-    getRecommendations(1);
+    if ((widget.pages ?? []).isEmpty) {
+      getRecommendations(widget.pageId ?? 1);
+    } else {
+      modules = (widget.pages ?? []).where((m) => m.isRelated == true).toList();
+      relatedModules =
+          (widget.pages ?? []).where((m) => m.isRelated == false).toList();
+      _showShimmer = false;
+    }
   }
 
   Future<void> getRecommendations(int pageId) async {
