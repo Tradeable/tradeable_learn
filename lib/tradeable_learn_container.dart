@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:tradeable_learn/models/tradeable_learn_module_model.dart';
 import 'package:tradeable_learn/tradeable_learn_module_list_page.dart';
 import 'package:tradeable_learn/tradeable_learn_sheet.dart';
-import 'package:tradeable_learn/utils/page_data.dart';
 
 const sidePanelLeftPadding = 40;
 
 class TradeableLearnContainer extends StatefulWidget {
   final Widget child;
   final double learnBtnTopPos;
-  final PageInfo? pageId;
-  final List<TradeableLearnModuleModel>? pages;
+  final int pageId;
+  final List<TradeableLearnModuleModel> levelData;
 
   const TradeableLearnContainer(
       {super.key,
       required this.child,
       this.learnBtnTopPos = 80,
-      this.pageId,
-      this.pages});
+      required this.pageId,
+      required this.levelData});
 
   @override
   State<TradeableLearnContainer> createState() =>
@@ -62,8 +61,8 @@ class _TradeableLearnContainerState extends State<TradeableLearnContainer>
                     context: context,
                     sheetBorderRadius: 12,
                     body: TradeableLearnModuleListPage(
-                      pageId: 1,
-                      // pages: learnLevels,
+                      pageId: widget.pageId,
+                      pages: widget.levelData,
                       onClose: () {
                         Navigator.of(context).pop();
                       },
