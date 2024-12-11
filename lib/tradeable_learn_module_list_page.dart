@@ -3,13 +3,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:tradeable_learn/level_screen.dart';
 import 'package:tradeable_learn/models/tradeable_learn_module_model.dart';
+import 'package:tradeable_learn/utils/page_data.dart';
 import 'package:tradeable_learn/widgets/module_card.dart';
 import 'package:tradeable_learn/widgets/module_card_shimmer.dart';
 
 class TradeableLearnModuleListPage extends StatefulWidget {
   final VoidCallback onClose;
-  final int pageId;
-  final List<TradeableLearnModuleModel> pages;
+  final PageId? pageId;
+  final List<ModuleLabel>? pages;
 
   const TradeableLearnModuleListPage(
       {super.key,
@@ -31,43 +32,46 @@ class _TradeableLearnModuleListPageState
   @override
   void initState() {
     super.initState();
-    if ((widget.pages).isEmpty) {
-      getRecommendations(widget.pageId);
-    } else {
-      modules = (widget.pages).where((m) => m.isRelated == true).toList();
-      relatedModules =
-          (widget.pages).where((m) => m.isRelated == false).toList();
+    getRecommendations(widget.pageId);
+    if (widget.pages != null) {
+      modules.addAll((widget.pages!).map((m) => m.value).toList());
+      // relatedModules =
+      //     (widget.pages!).where((m) => m.isRelated == false).toList();
       _showShimmer = false;
     }
   }
 
-  Future<void> getRecommendations(int pageId) async {
-    try {
-      Response response = await Dio().get(
-        "https://dev.api.tradeable.app/v4/learn/pages",
-        queryParameters: {"id": pageId},
-        options: Options(
-          headers: {
-            "Authorization":
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoib3VpeWd3ZGFpdXlnZml1eTQ3NDMyMmFzZmFkc3ZzZGZhIiwiaWF0IjoxNzE0OTg1NTA4LCJleHAiOjE3NDY1MjE1MDh9.DIhB9y6uBhsjNZnTAMP-Fmr-KWzx_l54JcraFkSbjWU"
-          },
-        ),
-      );
+  Future<void> getRecommendations(PageId? pageId) async {
+    if (pageId == null) {
+      return;
+    } else {
+      try {
+        Response response = await Dio().get(
+          "https://dev.api.tradeable.app/v4/learn/pages",
+          queryParameters: {"id": pageId.value},
+          options: Options(
+            headers: {
+              "Authorization":
+                  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoib3VpeWd3ZGFpdXlnZml1eTQ3NDMyMmFzZmFkc3ZzZGZhIiwiaWF0IjoxNzE0OTg1NTA4LCJleHAiOjE3NDY1MjE1MDh9.DIhB9y6uBhsjNZnTAMP-Fmr-KWzx_l54JcraFkSbjWU"
+            },
+          ),
+        );
 
-      List data = response.data["page_level_link"];
-      setState(() {
-        modules = data
-            .where((module) => module["is_related"] == true)
-            .map((module) => TradeableLearnModuleModel.fromJson(module))
-            .toList();
-        relatedModules = data
-            .where((module) => module["is_related"] == false)
-            .map((module) => TradeableLearnModuleModel.fromJson(module))
-            .toList();
-        _showShimmer = false;
-      });
-    } catch (e) {
-      print("Error: $e");
+        List data = response.data["page_level_link"];
+        setState(() {
+          modules.addAll(data
+              .where((module) => module["is_related"] == true)
+              .map((module) => TradeableLearnModuleModel.fromJson(module))
+              .toList());
+          relatedModules = data
+              .where((module) => module["is_related"] == false)
+              .map((module) => TradeableLearnModuleModel.fromJson(module))
+              .toList();
+          _showShimmer = false;
+        });
+      } catch (e) {
+        print("Error: $e");
+      }
     }
   }
 
