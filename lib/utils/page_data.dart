@@ -1,12 +1,14 @@
 import 'package:tradeable_learn/models/tradeable_learn_module_model.dart';
 
 enum PageInfo {
-  defaultPage(1, "Default Page");
+  defaultPage(id: 1, name: "Default Page", learnModules: []);
 
   final int id;
   final String name;
+  final List<TradeableLearnModuleModel> learnModules;
 
-  const PageInfo(this.id, this.name);
+  const PageInfo(
+      {required this.id, required this.name, this.learnModules = const []});
 }
 
 List<TradeableLearnModuleModel> learnLevels = [
