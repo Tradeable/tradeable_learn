@@ -282,17 +282,3 @@ class _MultiModuleSelectorState extends State<MultiModuleSelector> {
     );
   }
 }
-
-// Usage Example:
-/*
-Set<ModuleLabel> selectedModules = {};
-
-MultiModuleSelector(
-  selectedModules: selectedModules,
-  onSelectionChanged: (newSelection) {
-    setState(() {
-      selectedModules = newSelection;
-    });
-  },
-)
-*/
