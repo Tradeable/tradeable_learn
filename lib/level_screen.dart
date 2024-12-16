@@ -37,6 +37,7 @@ import 'package:tradeable_learn_widget/mcq_question/mcq_model.dart';
 import 'package:tradeable_learn_widget/mcq_question/mcq_question.dart';
 import 'package:tradeable_learn_widget/multiple_mcq_select/multiple_mcq_model.dart';
 import 'package:tradeable_learn_widget/multiple_mcq_select/multiple_mcq_question.dart';
+import 'package:tradeable_learn_widget/tradeable_learn_widget.dart';
 import 'package:tradeable_learn_widget/video_educorner/video_educorner.dart';
 import 'package:tradeable_learn_widget/video_educorner/video_educorner_model.dart';
 
@@ -189,6 +190,10 @@ class _MyLevelWidget extends State<LevelScreen> {
       case "multiple_select_mcq":
         return MultipleMCQSelect(
             model: MultipleMCQModel.fromJson(data),
+            onNextClick: () => onNextClick());
+      case "trend_line":
+        return TrendLineWidget(
+            model: TrendLineModel.fromJson(data),
             onNextClick: () => onNextClick());
       default:
         return Container(
