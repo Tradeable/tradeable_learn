@@ -12,6 +12,7 @@ class AxisPageList extends StatefulWidget {
 class _AxisPageListState extends State<AxisPageList> {
   PageId? selectedPage;
   List<ModuleLabel> moduleLabels = [];
+  late List<TradeableLearnModuleModel> selectedModules = [];
 
   @override
   void initState() {
@@ -30,7 +31,7 @@ class _AxisPageListState extends State<AxisPageList> {
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   DropdownButton<PageId>(
