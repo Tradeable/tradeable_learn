@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tradeable_learn/models/tradeable_learn_module_model.dart';
 import 'package:tradeable_learn/tradeable_learn.dart';
 import 'package:tradeable_learn/utils/page_data.dart';
 
