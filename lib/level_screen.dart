@@ -96,6 +96,8 @@ class _MyLevelWidget extends State<LevelScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(backgroundColor: Colors.white),
       body: SafeArea(
         child: isLoading
             ? const Center(child: CircularProgressIndicator())
