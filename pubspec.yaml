@@ -15,7 +15,7 @@ dependencies:
   tradeable_learn_widget:
     git:
       url: https://github.com/Tradeable/tradeable_learn_widget.git
-      ref: axis_levels
+      ref: main
 
 dev_dependencies:
   flutter_test:
