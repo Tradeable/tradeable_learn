@@ -8,7 +8,7 @@ Add the following dependency to your `pubspec.yaml`:
 tradeable_learn:
   git:
     url: https://github.com/Tradeable/tradeable_learn.git
-    ref: main
+    ref: axis_security
 ```
 
 ## Basic Usage
