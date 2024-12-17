@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tradeable_learn/models/tradeable_learn_module_model.dart';
 import 'package:tradeable_learn/tradeable_learn.dart';
-import 'package:tradeable_learn/utils/page_data.dart';
-import 'package:tradeable_learn/widgets/option_strategy_widget.dart';
+import 'package:tradeable_learn/utils/tradeable_learn_info.dart';
 
 class AxisPageList extends StatefulWidget {
   const AxisPageList({super.key});
@@ -69,7 +68,37 @@ class _AxisPageListState extends State<AxisPageList> {
                   });
                 },
               ),
-              const OptionStrategyWidget()
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => OptionStrategyContainer(
+                              spotPrice: 24662,
+                              spotPriceDayDelta: 17.70,
+                              spotPriceDayDeltaPer: 0.07,
+                              onExecute: () {},
+                              legs: [
+                                OptionLeg(
+                                  symbol: "NIFTY",
+                                  strike: 24750,
+                                  type: PositionType.buy,
+                                  optionType: OptionType.call,
+                                  expiry: DateTime.parse("2024-12-19 15:30:00"),
+                                  quantity: 25,
+                                  premium: 121.8,
+                                ),
+                                OptionLeg(
+                                  symbol: "NIFTY",
+                                  strike: 24900,
+                                  type: PositionType.sell,
+                                  optionType: OptionType.call,
+                                  expiry: DateTime.parse("2024-12-19 15:30:00"),
+                                  quantity: 25,
+                                  premium: 73.35,
+                                )
+                              ],
+                            )));
+                  },
+                  child: const Text("Options Strategy"))
             ],
           ),
         ),

@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:tradeable_learn/level_screen.dart';
 import 'package:tradeable_learn/models/tradeable_learn_module_model.dart';
-import 'package:tradeable_learn/utils/page_data.dart';
+import 'package:tradeable_learn/utils/tradeable_learn_info.dart';
 import 'package:tradeable_learn/widgets/module_card.dart';
 import 'package:tradeable_learn/widgets/module_card_shimmer.dart';
 
