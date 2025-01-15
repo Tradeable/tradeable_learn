@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tradeable_learn/tradeable_learn_module_list_page.dart';
 import 'package:tradeable_learn/tradeable_learn_sheet.dart';
-import 'package:tradeable_learn/utils/page_data.dart';
+import 'package:tradeable_learn/utils/tradeable_learn_info.dart';
 
 const sidePanelLeftPadding = 40;
 
