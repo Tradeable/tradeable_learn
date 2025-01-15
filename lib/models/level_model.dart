@@ -1,3 +1,5 @@
+import 'package:tradeable_learn_widget/tradeable_learn_widget.dart';
+
 class Level {
   final String levelInternalName;
   final int levelId;
@@ -11,20 +13,21 @@ class Level {
 
   // final RejectReasonModel rejectReason;
   final List<String>? tickers;
+  final Recommendations? recommendations;
 
-  Level({
-    required this.levelInternalName,
-    required this.levelId,
-    required this.title,
-    required this.description,
-    required this.imageUrl,
-    required this.type,
-    required this.status,
-    this.graph,
-    required this.isDemo,
-    // required this.rejectReason,
-    this.tickers,
-  });
+  Level(
+      {required this.levelInternalName,
+      required this.levelId,
+      required this.title,
+      required this.description,
+      required this.imageUrl,
+      required this.type,
+      required this.status,
+      this.graph,
+      required this.isDemo,
+      // required this.rejectReason,
+      this.tickers,
+      this.recommendations});
 
   factory Level.fromJson(Map<String, dynamic> json) {
     return Level(
@@ -39,6 +42,10 @@ class Level {
       isDemo: json['is_demo'],
       // rejectReason: RejectReasonModel.fromJson(json['reject_reason']),
       tickers: (json['tickers'] as List?)?.map((e) => e as String).toList(),
+      recommendations: json['recommendations'] != null
+          ? Recommendations.fromJson(
+              json['recommendations'] as Map<String, dynamic>)
+          : null,
     );
   }
 
@@ -55,6 +62,7 @@ class Level {
       'is_demo': isDemo,
       // 'reject_reason': rejectReason.toJson(),
       'tickers': tickers,
+      'recommendations': recommendations?.toJson(),
     };
   }
 }
