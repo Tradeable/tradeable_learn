@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:tradeable_learn/api.dart';
 import 'package:tradeable_learn/models/level_model.dart';
 import 'package:tradeable_learn_widget/tradeable_learn_widget.dart';
+import 'package:tradeable_learn_widget/user_story_widget/user_story_model.dart';
 
 class LevelScreen extends StatefulWidget {
   final int levelId;
@@ -17,14 +18,16 @@ class _MyLevelWidget extends State<LevelScreen> {
   late Level level;
   bool isLoading = true;
   Node? currentNode;
+  Recommendations? recommendations;
 
   @override
   void initState() {
     super.initState();
-    fetchLevelById(widget.levelId).then((val) {
+    Api().fetchLevelById(widget.levelId).then((val) {
       setState(() {
         isLoading = false;
         level = val;
+        recommendations = level.recommendations;
       });
       findStartNode();
     });
@@ -41,19 +44,6 @@ class _MyLevelWidget extends State<LevelScreen> {
     setState(() {
       currentNode = startNode;
     });
-  }
-
-  Future<Level> fetchLevelById(int levelId) async {
-    Response response = await Dio().get(
-      "https://dev.api.tradeable.app/v4/learn/level/$levelId",
-      options: Options(
-        headers: {
-          "Authorization":
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiWTNwMFFkWHFQYmVPR2J3MnZuNEJiOEpIOEV2MiIsImlhdCI6MTcxNDk4NTUwOCwiZXhwIjoxNzQ2NTIxNTA4fQ.81vqPGeEItEeL62HXmmBPsN532TMDlhHdKDB6mb7KQI"
-        },
-      ),
-    );
-    return Level.fromJson(response.data);
   }
 
   @override
@@ -73,7 +63,7 @@ class _MyLevelWidget extends State<LevelScreen> {
   Widget getViewByType(String levelType, Map<String, dynamic>? data) {
     switch (levelType) {
       case "End":
-        return const Center(child: Text("Completed"));
+        return LevelCompleteScreen(recommendations: recommendations);
       case "Edu_Corner":
         // case "EduCornerV1":
         return EduCornerV1(
@@ -159,6 +149,18 @@ class _MyLevelWidget extends State<LevelScreen> {
       case "trend_line":
         return TrendLineWidget(
             model: TrendLineModel.fromJson(data),
+            onNextClick: () => onNextClick());
+      case "supply_demand_educorner":
+        return DemandSuplyEduCornerMain(
+            model: DemandSupplyEduCornerModel.fromJson(data),
+            onNextClick: () => onNextClick());
+      case "user_story":
+        return UserStoryUIMain(
+            model: UserStoryModel.fromJson(data),
+            onNextClick: () => onNextClick());
+      case "horizontal_line_v1":
+        return HorizontalLineQuestionV1(
+            model: HorizontalLineModelV1.fromJson(data),
             onNextClick: () => onNextClick());
       default:
         return Container(

@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:tradeable_learn/api.dart';
 import 'package:tradeable_learn/level_screen.dart';
 import 'package:tradeable_learn/models/tradeable_learn_module_model.dart';
 import 'package:tradeable_learn/utils/tradeable_learn_info.dart';
@@ -33,10 +33,8 @@ class _TradeableLearnModuleListPageState
   void initState() {
     super.initState();
     getRecommendations(widget.pageId);
-    if (widget.pages != null) {
+    if ((widget.pages?.isNotEmpty ?? false)) {
       modules.addAll((widget.pages!).map((m) => m.value).toList());
-      // relatedModules =
-      //     (widget.pages!).where((m) => m.isRelated == false).toList();
       _showShimmer = false;
     }
   }
@@ -45,33 +43,15 @@ class _TradeableLearnModuleListPageState
     if (pageId == null) {
       return;
     } else {
-      try {
-        Response response = await Dio().get(
-          "https://dev.api.tradeable.app/v4/learn/pages",
-          queryParameters: {"id": pageId.value},
-          options: Options(
-            headers: {
-              "Authorization":
-                  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoib3VpeWd3ZGFpdXlnZml1eTQ3NDMyMmFzZmFkc3ZzZGZhIiwiaWF0IjoxNzE0OTg1NTA4LCJleHAiOjE3NDY1MjE1MDh9.DIhB9y6uBhsjNZnTAMP-Fmr-KWzx_l54JcraFkSbjWU"
-            },
-          ),
-        );
-
-        List data = response.data["page_level_link"];
+      Api().getPages(pageId).then((val) {
         setState(() {
-          modules.addAll(data
-              .where((module) => module["is_related"] == true)
-              .map((module) => TradeableLearnModuleModel.fromJson(module))
-              .toList());
-          relatedModules = data
-              .where((module) => module["is_related"] == false)
-              .map((module) => TradeableLearnModuleModel.fromJson(module))
-              .toList();
+          modules
+              .addAll(val.where((module) => module.isRelated == true).toList());
+          relatedModules =
+              val.where((module) => module.isRelated == false).toList();
           _showShimmer = false;
         });
-      } catch (e) {
-        print("Error: $e");
-      }
+      });
     }
   }
 
@@ -138,32 +118,34 @@ class _TradeableLearnModuleListPageState
               ),
             const SizedBox(height: 8),
             if (relatedModules.isNotEmpty)
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: relatedModules.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => LevelScreen(
-                              levelId: int.parse(relatedModules[index].id))));
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        children: [
-                          Text(relatedModules[index].name,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              )),
-                          const SizedBox(width: 4),
-                          const Icon(Icons.arrow_forward_ios, size: 14)
-                        ],
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: relatedModules.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => LevelScreen(
+                                levelId: int.parse(relatedModules[index].id))));
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: Row(
+                          children: [
+                            Text(relatedModules[index].name,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                )),
+                            const SizedBox(width: 4),
+                            const Icon(Icons.arrow_forward_ios, size: 14)
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             const SizedBox(height: 20),
             InkWell(
