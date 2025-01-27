@@ -4,8 +4,6 @@ import 'package:tradeable_learn/api.dart';
 import 'package:tradeable_learn/models/level_model.dart';
 import 'package:tradeable_learn_widget/tradeable_learn_widget.dart';
 import 'package:tradeable_learn_widget/user_story_widget/user_story_model.dart';
-import 'package:tradeable_learn_widget/video_educorner/video_educorner.dart';
-import 'package:tradeable_learn_widget/video_educorner/video_educorner_model.dart';
 
 class LevelScreen extends StatefulWidget {
   final int levelId;

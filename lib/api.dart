@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:tradeable_learn/models/level_model.dart';
 import 'package:tradeable_learn/models/tradeable_learn_module_model.dart';
 import 'package:tradeable_learn/utils/constants.dart';
-import 'package:tradeable_learn/utils/page_data.dart';
+import 'package:tradeable_learn/utils/tradeable_learn_info.dart';
 
 class Api {
   Future<List<TradeableLearnModuleModel>> getPages(PageId pageId) async {

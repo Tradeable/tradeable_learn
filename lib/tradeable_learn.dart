@@ -1,4 +1,4 @@
-library tradeable_learn;
+library;
 
 export 'package:tradeable_learn/tradeable_learn_container.dart';
 
